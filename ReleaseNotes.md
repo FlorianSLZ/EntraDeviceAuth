@@ -1,6 +1,6 @@
 # Release notes for EntraDeviceAuth module
 
-## 24.06.21.2
+## 24.06.21.2 - .5
 - function optimasation/renaming
 
 ## 24.06.21.1

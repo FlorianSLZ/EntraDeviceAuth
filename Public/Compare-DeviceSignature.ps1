@@ -34,10 +34,10 @@ function Compare-DeviceSignature {
     )
     Process {
         # Convert from Base64 string to byte array
-        $PublicKeyBytes = [Convert]::FromBase64String($ValidationRequest.Body.PublicKey)
+        $PublicKeyBytes = [Convert]::FromBase64String($ValidationRequest.PublicKey)
 
         # Convert signature from Base64 string
-        $SignatureBytes = [Convert]::FromBase64String($ValidationRequest.Body.Signature)
+        $SignatureBytes = [Convert]::FromBase64String($ValidationRequest.Signature)
 
         # Extract the modulus and exponent based on public key data
         $ExponentData = $PublicKeyBytes[-3..-1]

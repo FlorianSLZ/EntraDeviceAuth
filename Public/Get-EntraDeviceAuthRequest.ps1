@@ -1,4 +1,4 @@
-function New-EntraDeviceAuth-Request {
+function Get-EntraDeviceAuthRequest {
     <#
     .SYNOPSIS
         Creates a new device authentication request for an Entra-joined device.

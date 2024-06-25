@@ -54,7 +54,7 @@ function Compare-DeviceThumbprint {
         # Check if thumbprint was found
         if ($EntraThumbprint -eq $null) {
             Write-Warning "Thumbprint key in Entra ID not found."
-        }elseif($EntraThumbprint -like "*$($ValidationRequest.Body.Thumbprint)*"){
+        }elseif($EntraThumbprint -like "*$($ValidationRequest.Thumbprint)*"){
             return $true
         }else{
             return $false
