@@ -1,4 +1,4 @@
-function Add-xxx{
+function Get-EntraDeviceAuthValidation{
     
     <#
     .SYNOPSIS
@@ -28,16 +28,8 @@ function Add-xxx{
         [array]$ValidationRequest
     )
     try{
-
-
-        # Check if Graph API Connection is active with rights to: Device.Read.All
-        if(!$((Get-MgContext).Scopes -contains "Device.Read.All")){
-            Write-Error 'No active Graph connection. Call "Connect-MgGraph -Scopes Device.Read.All" first.'
-            exit 
-        }
-
         try{
-            $EntraDevice = Get-MgDevice -Filter "deviceId eq '$DeviceID'"
+            $EntraDevice = Get-MgDevice -Filter "deviceId eq '$($ValidationRequest.DeviceID)'"
         }catch{
             Write-Error "Device not found: `n$_"
 
@@ -47,23 +39,20 @@ function Add-xxx{
         $Mismatch = @()
 
         # Compare each variable and collect errors if there is a mismatch
-        if ($DeviceName -ne $EntraDevice.DisplayName) {
+        if ($ValidationRequest.DeviceName -ne $EntraDevice.DisplayName) {
             $Mismatch += "DeviceName mismatch. Expected: $($EntraDevice.DeviceName), Received: $DeviceName"
         }
 
-        if ($DeviceID -ne $EntraDevice.DeviceID) {
+        if ($ValidationRequest.DeviceID -ne $EntraDevice.DeviceID) {
             $Mismatch += "DeviceID mismatch. Expected: $($EntraDevice.DeviceID), Received: $DeviceID"
         }
 
-        $DeviceSignatureVerification = Compare-DeviceSignature -PublicKeyEncoded $PublicKey -Signature $Signature -Content $EntraDevice.deviceId
-        $DeviceSignatureVerification = Compare-DeviceSignature -EntraDevice $EntraDevice -ValidationRequest $ValidationRequest
-        if ($DeviceSignatureVerification -eq $true) {
-            $Mismatch += "Signature mismatch. Expected: $($EntraDevice.Signature), Received: $Signature"
+        if (!$(Compare-DeviceSignature -EntraDevice $EntraDevice -ValidationRequest $ValidationRequest)) {
+            $Mismatch += "Signature mismatch. Signature verification failed."
         }
 
-        $DeviceThumbprintVerification = Compare-DeviceThumbprint -EntraDevice $EntraDevice -ValidationRequest $ValidationRequest
-        if ($DeviceThumbprintVerification -eq $true) {
-            $Mismatch += "Thumbprint mismatch. Expected: $($EntraDevice.Thumbprint), Received: $Thumbprint"
+        if (!$(Compare-DeviceThumbprint -EntraDevice $EntraDevice -ValidationRequest $ValidationRequest)) {
+            $Mismatch += "Thumbprint mismatch. Thumbprint verification failed."
         }
 
         # Check if there are any errors
@@ -71,7 +60,7 @@ function Add-xxx{
             return $true
         } else {
             # If there are errors, return the errors
-            Write-Verbose "Mismatch: " + ($Mismatch -join "; ")
+            Write-Verbose "Mismatch:  $($Mismatch -join "; ")"
             return $false
         }
         
