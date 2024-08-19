@@ -31,14 +31,23 @@
     <a href='https://buymeacoffee.com/scloud' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Glass of wine' /></a>
 </p>
 
-# EntraDeviceAuth (IWD)
-![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/EntraDeviceAuth)
+# EntraDeviceAuth
+<a href="https://www.powershellgallery.com/packages/EntraDeviceAuth/" alt="PowerShell Gallery Version">
+    <img src="https://img.shields.io/powershellgallery/v/EntraDeviceAuth.svg" />
+</a>
+The EntraDeviceAuth PowerShell module simplifies the process of creating a robust authentication mechanism for Entra ID-enrolled devices using their device certificates. This module is designed to enhance security and streamline operations by leveraging Azure Function Apps for authentication handling.
 
-The "Intune Win32 Deployer" allows you to transform Windows Package Manager (winget) and Chocolatey installations for Intune into a Win32 application (intunewin) and upload it straight away to your MEM environment. If you want to do without the automatic upload, you can also just generate the intunewin files.
+*Use Cases*
+
+- Securely distribute configuration files to managed devices.
+- Securely collect data from managed devices.
+- Automate device-specific tasks and workflows.
+  
+By leveraging the EntraDeviceAuth module, organizations can establish a secure and efficient authentication infrastructure for their Entra ID-enrolled devices, empowering them to confidently manage and protect their resources.
 
 ## Installing the module from PSGallery
 
-The IntuneWin32App module is published to the [PowerShell Gallery](https://www.powershellgallery.com/packages/EntraDeviceAuth). 
+The EntraDeviceAuth module is published to the [PowerShell Gallery](https://www.powershellgallery.com/packages/EntraDeviceAuth). 
 Install it on your system by running the following in an elevated PowerShell console:
 ```PowerShell
 Install-Module -Name EntraDeviceAuth
