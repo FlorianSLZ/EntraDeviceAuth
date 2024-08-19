@@ -77,13 +77,11 @@ Here are all functions and some examples to start with:
 
 
 ## Authentication
-Before using any of the "Get-EntraDeviceAuth-Validation" function within this module, ensure you are authenticated. 
+Before using the "Get-EntraDeviceAuth-Validation" function within this module, ensure you are authenticated. 
 
 ### User Authentication
 With this command, you'll be connected to the Graph API and be able to use all commands
 ```PowerShell
-# Authentication as User
 Connect-MgGraph -Scopes Device.Read.All
-
 ```
 
