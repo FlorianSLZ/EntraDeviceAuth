@@ -35,7 +35,7 @@
 
 The EntraDeviceAuth PowerShell module simplifies the process of creating a robust authentication mechanism for Entra ID-enrolled devices using their device certificates. This module is designed to enhance security and streamline operations by leveraging Azure Function Apps for authentication handling.
 
-*Use Cases*
+**Use Cases**
 
 - Securely distribute configuration files to managed devices.
 - Securely collect data from managed devices.
