@@ -17,10 +17,11 @@ function New-RSASignatureFromCertificate {
         Author:      Florian Salzmann
         Contact:     @FlorianSLZ
         Created:     2024-06-21
-        Updated:     2024-06-21
-    
+        Updated:     2026-10-26
+
         Version history:
         1.0.0 - (2024-06-21) Function created
+        1.0.1 - (2026-10-26) Replace SHA256Managed, drop -Recurse on the certificate store
 
         Credits to Nickolaj Andersen for the initial function.
     #>
@@ -37,7 +38,7 @@ function New-RSASignatureFromCertificate {
     Process {
         try {
             # Retrieve the certificate based on thumbprint
-            $Certificate = Get-ChildItem -Path "Cert:\LocalMachine\My" -Recurse | Where-Object { $_.Thumbprint -eq $Thumbprint }
+            $Certificate = Get-ChildItem -Path "Cert:\LocalMachine\My" | Where-Object { $_.Thumbprint -eq $Thumbprint }
 
             if ($Certificate -ne $null -and $Certificate.HasPrivateKey) {
                 # Get the RSA private key
@@ -45,9 +46,9 @@ function New-RSASignatureFromCertificate {
 
                 if ($RSAPrivateKey -ne $null) {
                     # Compute SHA256 hash of the content
-                    $SHA256Managed = [System.Security.Cryptography.SHA256Managed]::Create()
+                    $SHA256 = [System.Security.Cryptography.SHA256]::Create()
                     $EncodedContentData = [System.Text.Encoding]::UTF8.GetBytes($Content)
-                    $ComputedHash = $SHA256Managed.ComputeHash($EncodedContentData)
+                    $ComputedHash = $SHA256.ComputeHash($EncodedContentData)
 
                     # Sign the hash with RSA private key
                     $SignatureSigned = $RSAPrivateKey.SignHash($ComputedHash, [System.Security.Cryptography.HashAlgorithmName]::SHA256, [System.Security.Cryptography.RSASignaturePadding]::Pkcs1)

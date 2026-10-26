@@ -13,7 +13,7 @@
 RootModule = 'EntraDeviceAuth.psm1'
 
 # Version number of this module.
-ModuleVersion = '24.06.21.5'
+ModuleVersion = '26.10.26.1'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Desktop'
@@ -31,7 +31,7 @@ CompanyName = 'scloud.work'
 Copyright = '(c) 2024 Florian Salzmann. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Secure Authentification Request for your Intune/Entra ID devices to use agains Azure Function Apps. '
+Description = 'Secure authentication request for your Intune/Entra ID devices to use against Azure Function Apps.'
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '5.1'

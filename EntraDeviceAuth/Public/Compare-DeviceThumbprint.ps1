@@ -2,38 +2,36 @@ function Compare-DeviceThumbprint {
     <#
     .SYNOPSIS
         Compare the thumbprint from the Entra device with the thumbprint from the validation request.
-    
+
     .DESCRIPTION
         This function extracts the thumbprint from the Entra device's AlternativeSecurityIds and compares it with the thumbprint provided in the validation request.
 
     .PARAMETER EntraDevice
-        Specify the Entra device object which contains AlternativeSecurityIds. (Genarated with Get-MgDevice)
+        Specify the Entra device object which contains AlternativeSecurityIds. (Generated with Get-MgDevice)
 
     .PARAMETER ValidationRequest
-        Specify the validation request object which contains the Thumbprint to be compared. (Genarated with Get-EntraDeviceAuth-Local)
-    
+        Specify the validation request object which contains the Thumbprint to be compared. (Generated with Get-EntraDeviceAuthRequest)
+
     .NOTES
         Author:      Florian Salzmann
         Contact:     @FlorianSLZ
         Created:     2024-06-21
-        Updated:     2024-06-21
-    
+        Updated:     2026-10-26
+
         Version history:
         1.0.0 - (2024-06-21) Function created
+        1.0.1 - (2026-10-26) [psobject] parameter types, help text fixes
     #>
     param(
-        [parameter(Mandatory = $true, HelpMessage = "Specify the Entra device object which contains AlternativeSecurityIds. (Genarated with Get-MgDevice)")]
+        [parameter(Mandatory = $true, HelpMessage = "Specify the Entra device object which contains AlternativeSecurityIds. (Generated with Get-MgDevice)")]
         [ValidateNotNullOrEmpty()]
-        [array]$EntraDevice,
+        [psobject]$EntraDevice,
 
-        [parameter(Mandatory = $true, HelpMessage = "Specify the validation request object which contains the Thumbprint to be compared. (Genarated with Get-EntraDeviceAuth-Local)")]
+        [parameter(Mandatory = $true, HelpMessage = "Specify the validation request object which contains the Thumbprint to be compared. (Generated with Get-EntraDeviceAuthRequest)")]
         [ValidateNotNullOrEmpty()]
-        [array]$ValidationRequest
+        [psobject]$ValidationRequest
     )
     Process {
-
-
-
         # Extract the AlternativeSecurityIds
         $AlternativeSecurityIds = $EntraDevice.AlternativeSecurityIds
 
@@ -52,14 +50,13 @@ function Compare-DeviceThumbprint {
         }
 
         # Check if thumbprint was found
-        if ($EntraThumbprint -eq $null) {
+        if ($null -eq $EntraThumbprint) {
             Write-Warning "Thumbprint key in Entra ID not found."
-        }elseif($EntraThumbprint -like "*$($ValidationRequest.Thumbprint)*"){
+        } elseif ($EntraThumbprint -like "*$($ValidationRequest.Thumbprint)*") {
             return $true
-        }else{
+        } else {
             return $false
         }
 
     }
 }
-
